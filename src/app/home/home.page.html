@@ -1,14 +1,25 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Ionic Blank
+      Mark Attendance
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
-  </div>
+<ion-content color='primary'>
+  <ion-card>
+    <ion-card-header class='ion-text-center'>
+      <ion-text class='card-header-text'>Login</ion-text>
+      <ion-icon name='contact' size='large' class='card-header-icon'></ion-icon>
+    </ion-card-header>
+    <ion-card-content>
+      <form (submit)='submitted()'>
+        <ion-label>Student Id</ion-label>
+        <ion-input type='text' name='stduent_id' [(ngModel)]='student_id'></ion-input>
+        <ion-label>Password</ion-label>
+        <ion-input type='password' name='password' [(ngModel)]='password'></ion-input>
+        <ion-button type='submit' class='ion-padding ion-align-self-center'>Submit</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
