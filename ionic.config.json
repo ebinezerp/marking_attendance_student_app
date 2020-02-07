@@ -1,7 +1,8 @@
 {
   "name": "student-app",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }
