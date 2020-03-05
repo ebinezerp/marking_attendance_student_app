@@ -11,19 +11,19 @@ import { Router } from '@angular/router';
 })
 export class HomePage {
 
-  student_id: string;
+  studentId: string;
   password: string;
 
 
-  constructor(private studentService: StudentService,
-    private router: Router) {}
+  constructor(private studentService: StudentService, private router: Router) {
+  }
 
   submitted() {
-    this.studentService.login(this.student_id, this.password).subscribe(
+    this.studentService.login(this.studentId, this.password).subscribe(
       (result) => {
         this.router.navigate(['/scanner']).then(
           () => {
-          this.student_id = '';
+          this.studentId = '';
           this.password = '';
         }
         );

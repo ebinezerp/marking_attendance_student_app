@@ -9,8 +9,8 @@ export class StudentService {
 
   constructor(private httpClient: HttpClient) { }
 
-  login(student_id: string, password: string): Observable<boolean> {
-    const params = { 'student_id': student_id, 'password': password};
-    return this.httpClient.post<boolean>('http://localhost:8800/login', '', {params});
+  login(studentId: string, password: string): Observable<boolean> {
+    const params = { 'studentId': studentId, 'password': password};
+    return this.httpClient.post<boolean>('http://localhost:8800/login/std', '', {params});
   }
 }
