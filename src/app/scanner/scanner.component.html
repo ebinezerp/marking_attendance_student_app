@@ -1,21 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Troy's QR Scanner Demo
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
-  <ion-card class="welcome-card">
-    <img src="/assets/scan.jpeg" alt="" />
-    <ion-card-header>
-      <ion-card-subtitle>Get Started</ion-card-subtitle>
-      <ion-card-title> QR Code and Barcode </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p>Here we can scan a Qr code or Barcode to get data and we will also see how to generate Barcode.</p>
-    </ion-card-content>
-    <ion-button expand='block' margin (click)="goToQrScan()">Click to scan a barcode</ion-button>
-    <div *ngIf="scannedData">
-      <p>
-        Scanned Code Text : <b>{{ scannedData["text"] }}</b>
-      </p>
-      <p>
-        Scanned Code Format : <b>{{ scannedData["format"] }}</b>
-      </p>
-    </div>
-  </ion-card>
+  <ion-grid>
+    <ion-row>
+      <ion-col text-center>
+        <ion-button *ngIf="!readyToScan" (click)="prepareScanner()" size="large">PREPARE SCANNER</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="readyToScan">
+      <ion-col text-center>
+        <ion-button *ngIf="!scanning" (click)="toggleScanner()" color="success" size="large">START SCANNING</ion-button>
+        <ion-button *ngIf="scanning" (click)="toggleScanner()" color="danger" size="large">STOP SCANNING</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

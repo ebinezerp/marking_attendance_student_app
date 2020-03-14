@@ -1,57 +1,62 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 
 @Component({
   selector: 'app-scanner',
-  templateUrl: './scanner.component.html',
-  styleUrls: ['./scanner.component.scss'],
+  templateUrl: 'scanner.component.html',
+  styleUrls: ['scanner.component.scss'],
 })
-export class ScannerComponent {
+export class Scanner {
 
+  readyToScan: boolean = false;
+  scanning: boolean = false;
 
-  encodedData = '';
-  QRSCANNED_DATA: string;
-  isOn = false;
-  scannedData: {};
-  constructor(public qrScanCtrl: QRScanner) { }
+  constructor(private qrScanner: QRScanner) { }
 
-  goToQrScan() {
-    this.qrScanCtrl.prepare()
+  ngOnInit(): void {
+    console.log("Home Page Initialized");
+  }
+
+  prepareScanner(): void {
+    this.qrScanner.prepare()
       .then((status: QRScannerStatus) => {
+        alert('prepared');
         if (status.authorized) {
-          // camera permission was granted
-          this.isOn = true;
-
-
-          // start scanning
-          const scanSub = this.qrScanCtrl.scan().subscribe((text: string) => {
+          console.log("Camera permision authorized");
+          this.readyToScan = true;
+          this.scanning = true;
+          this.qrScanner.show();
+          alert('show function called');
+          let scanSub = this.qrScanner.scan().subscribe((text: string) => {
+            alert(text);
             console.log('Scanned something', text);
-            this.isOn = false;
-
-            this.QRSCANNED_DATA = text;
-            if (this.QRSCANNED_DATA !== '') {
-              this.closeScanner();
-              scanSub.unsubscribe();
-            }
-
+            this.qrScanner.hide();
+            scanSub.unsubscribe();
           });
-          this.qrScanCtrl.show();
-
         } else if (status.denied) {
-          console.log('camera permission denied');
-          this.qrScanCtrl.openSettings();
+          console.log("Camera permission permanently denied");
         } else {
+          console.log("Camera permision temporarily denied");
         }
       })
       .catch((e: any) => console.log('Error is', e));
   }
 
-  closeScanner() {
-    this.isOn = false;
-    this.qrScanCtrl.hide();
-    this.qrScanCtrl.destroy();
+  toggleScanner(): void {
+    this.scanning = !this.scanning;
+    console.log("Toggled Scanner", this.scanning);
+    if (this.scanning) { this.startScanning(); }
+    else { this.stopScanning(); }
+  }
+
+  startScanning(): void {
+    console.log("Started Scanning");
+    (window.document.querySelector('html') as HTMLElement).classList.add('cameraView');
+  }
+
+  stopScanning(): void {
+    console.log("Stopped Scanning");
+    (window.document.querySelector('html') as HTMLElement).classList.remove('cameraView');
   }
 
 }
-
-

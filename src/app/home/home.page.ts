@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Student } from '../model/student';
 import { StudentService } from '../service/student.service';
 import { Router } from '@angular/router';
@@ -21,12 +20,17 @@ export class HomePage {
   submitted() {
     this.studentService.login(this.studentId, this.password).subscribe(
       (result) => {
+        alert('result' + result);
         this.router.navigate(['/scanner']).then(
           () => {
+          alert('scanner');
           this.studentId = '';
           this.password = '';
-        }
-        );
+        });
+      },
+      (error) => {
+        alert(error);
+        console.log(error);
       }
     );
   }
